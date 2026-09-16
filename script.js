@@ -69,6 +69,19 @@
     var span = document.createElement('span');
     span.className = 'task-text';
     span.textContent = task.text;
+    span.title = 'Doble clic para editar';
+    span.addEventListener('dblclick', function () {
+      startEdit(li, task, span);
+    });
+
+    var editBtn = document.createElement('button');
+    editBtn.className = 'edit-btn';
+    editBtn.type = 'button';
+    editBtn.setAttribute('aria-label', 'Editar tarea');
+    editBtn.innerHTML = '<svg viewBox="0 0 20 20" fill="none"><path d="M13.5 3.5L16.5 6.5L7 16H4V13L13.5 3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+    editBtn.addEventListener('click', function () {
+      startEdit(li, task, span);
+    });
 
     var delBtn = document.createElement('button');
     delBtn.className = 'delete-btn';
@@ -83,8 +96,53 @@
 
     li.appendChild(checkBtn);
     li.appendChild(span);
+    li.appendChild(editBtn);
     li.appendChild(delBtn);
     return li;
+  }
+
+  function startEdit(li, task, span) {
+    if (li.querySelector('.edit-input')) return;
+
+    var editInput = document.createElement('input');
+    editInput.type = 'text';
+    editInput.className = 'edit-input';
+    editInput.value = task.text;
+    editInput.maxLength = 200;
+
+    span.replaceWith(editInput);
+    editInput.focus();
+    editInput.setSelectionRange(editInput.value.length, editInput.value.length);
+
+    var finished = false;
+
+    function commit() {
+      if (finished) return;
+      finished = true;
+      var newText = editInput.value.trim();
+      if (newText) {
+        task.text = newText;
+      }
+      saveTasks();
+      render();
+    }
+
+    function cancel() {
+      if (finished) return;
+      finished = true;
+      render();
+    }
+
+    editInput.addEventListener('blur', commit);
+    editInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        editInput.blur();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        cancel();
+      }
+    });
   }
 
   form.addEventListener('submit', function (e) {

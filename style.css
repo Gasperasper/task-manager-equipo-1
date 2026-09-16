@@ -204,6 +204,7 @@ form {
   text-decoration-color: var(--done);
 }
 
+.edit-btn,
 .delete-btn {
   flex-shrink: 0;
   width: 30px;
@@ -219,14 +220,33 @@ form {
   transition: background 0.15s ease, color 0.15s ease;
 }
 
+.edit-btn:hover {
+  background: var(--line);
+  color: var(--ink);
+}
+
 .delete-btn:hover {
   background: var(--danger-soft);
   color: var(--danger);
 }
 
+.edit-btn svg,
 .delete-btn svg {
   width: 16px;
   height: 16px;
+}
+
+.edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  outline: none;
 }
 
 .empty-state {
