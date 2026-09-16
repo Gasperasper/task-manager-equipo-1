@@ -1,0 +1,260 @@
+:root {
+  --bg: #EAE6DC;
+  --surface: #FFFDF8;
+  --ink: #22301F;
+  --ink-soft: #5A6355;
+  --line: #D8D0BF;
+  --accent: #8B5E3C;
+  --accent-ink: #FFFDF8;
+  --done: #4C6B52;
+  --done-bg: #E4E9DF;
+  --danger: #A23E36;
+  --danger-soft: #F1E3DF;
+  --shadow: rgba(34, 48, 31, 0.08);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1B2019;
+    --surface: #242A22;
+    --ink: #EDE8DC;
+    --ink-soft: #A8AC9E;
+    --line: #3A4136;
+    --accent: #C99566;
+    --accent-ink: #1B2019;
+    --done: #8FB596;
+    --done-bg: #2B3428;
+    --danger: #D98C81;
+    --danger-soft: #3A2925;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  display: flex;
+  justify-content: center;
+  padding: 48px 20px;
+}
+
+.sheet {
+  width: 100%;
+  max-width: 560px;
+}
+
+header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 6px 0;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 6vw, 44px);
+  line-height: 1.05;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.01em;
+}
+
+.tally {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+#task-input {
+  flex: 1;
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+#task-input::placeholder {
+  color: var(--ink-soft);
+}
+
+#task-input:focus {
+  border-color: var(--accent);
+}
+
+#add-btn {
+  padding: 14px 22px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+#add-btn:hover {
+  opacity: 0.9;
+}
+
+#add-btn:active {
+  transform: scale(0.97);
+}
+
+#add-btn:focus-visible,
+#task-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+#task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px var(--shadow);
+}
+
+.task.done {
+  background: var(--done-bg);
+  border-color: transparent;
+}
+
+.check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--ink-soft);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.check:hover {
+  border-color: var(--done);
+}
+
+.task.done .check {
+  background: var(--done);
+  border-color: var(--done);
+}
+
+.check svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.task.done .check svg {
+  opacity: 1;
+}
+
+.task-text {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.task.done .task-text {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  text-decoration-color: var(--done);
+}
+
+.delete-btn {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.delete-btn:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.delete-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--ink-soft);
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.empty-state .mark {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 420px) {
+  form {
+    flex-direction: column;
+  }
+
+  #add-btn {
+    width: 100%;
+  }
+}
